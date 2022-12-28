@@ -1,13 +1,25 @@
 <div class="flex flex-row">
     <app-gaveta 
-    [numeroDeRoupas]="3">
+    [roupas]="gavetas[0]"
+    (dragstart)="onDragStart(1)" 
+    (drop)="onDrop($event, 1)" 
+    (dragover)="onDragOver($event)"
+    >
     </app-gaveta>
 
     <app-gaveta 
-    [numeroDeRoupas]="5">
+    [roupas]="gavetas[1]"
+    (dragstart)="onDragStart(2)" 
+    (drop)="onDrop($event, 2)" 
+    (dragover)="onDragOver($event)"
+    >
     </app-gaveta>
 
     <app-gaveta 
-    [numeroDeRoupas]="10">
+    [roupas]="gavetas[2]"
+    (dragstart)="onDragStart(3)" 
+    (drop)="onDrop($event, 3)" 
+    (dragover)="onDragOver($event)"
+    >
     </app-gaveta>
 </div>

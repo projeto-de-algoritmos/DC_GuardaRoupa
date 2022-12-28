@@ -1,9 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-
-interface Roupa {
-  w: number;
-  color: string;
-}
+import { Roupa } from '../interfaces/roupa.interface';
 
 @Component({
   selector: 'app-gaveta',
@@ -13,20 +9,21 @@ interface Roupa {
 
 export class GavetaComponent implements OnInit {
 
-  @Input() numeroDeRoupas: number = 0;
+  @Input() roupas: Roupa[] = [];
 
   constructor() { }
 
-  widith = 8;
-  roupas: Roupa[] = [];
-  colors = ['yellow', 'green', 'red', 'blue', 'gray']
-
   ngOnInit(): void {
-    for(let i=0; i<this.numeroDeRoupas; i++){
-      this.roupas.push({w: this.widith, color: this.colors[i % 5]})
-      this.widith+=4;
-    }
-    this.roupas.reverse();
+  }
+
+  onDrop(event: any) {
+    event.preventDefault();
+    console.log(event);
+  }
+  
+  onDragOver(event: any) {
+    event.stopPropagation();
+    event.preventDefault();
   }
 
 }
