@@ -10,6 +10,7 @@ import { Roupa } from '../interfaces/roupa.interface';
 export class GavetaComponent implements OnInit {
 
   @Input() roupas: Roupa[] = [];
+  @Input() draggable: boolean = true;
 
   constructor() { }
 

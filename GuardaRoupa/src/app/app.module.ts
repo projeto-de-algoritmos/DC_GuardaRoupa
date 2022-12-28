@@ -4,6 +4,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,6 +22,7 @@ import { GavetaComponent } from './gaveta/gaveta.component';
     MatFormFieldModule,
     ReactiveFormsModule,
     FormsModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]

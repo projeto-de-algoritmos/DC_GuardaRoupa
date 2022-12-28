@@ -2,7 +2,7 @@
     <img src="../../assets/gaveta.png" alt="gaveta" class="absolute z-0 mt-32">
     <div *ngFor="let roupa of roupas; let i = index"
         [class]="'block rounded-full border-2 border-black z-10 h-5 w-' + roupa.w + ' bg-' + roupa.color + '-500'"
-        [draggable]="(i==roupas.length-1) ? true : false"
+        [draggable]="(i==roupas.length-1 && draggable) ? true : false"
     >
     </div>
 </div>
