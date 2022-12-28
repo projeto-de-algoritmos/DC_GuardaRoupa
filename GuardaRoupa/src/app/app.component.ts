@@ -12,30 +12,33 @@ export class AppComponent implements OnInit{
 
   numeroDeRoupas = 3
 
-  widith = 8;
-  roupas: Roupa[] = [];
-  colors = ['yellow', 'green', 'red', 'blue', 'gray']
-
   gavetas: any[] = [];
+  colors = ['yellow', 'green', 'red', 'blue', 'gray']
 
   //Variável que apenas indicará de qual gaveta a roupa está sendo retirada
   gavetaInicial = 0;
 
+  options = [3,4,5,6,7,8,9,10];
+
   ngOnInit(): void {
     this.iniciaRoupas();
-    this.gavetas[0] = this.roupas;
   }
 
   iniciaRoupas(){
+    let roupas: Roupa[] = [];
+
     this.gavetas[0] = [];
     this.gavetas[1] = [];
     this.gavetas[2] = [];
 
+    let widith = 8;
+
     for(let i=0; i<this.numeroDeRoupas; i++){
-      this.roupas.push({w: this.widith, color: this.colors[i % 5]})
-      this.widith+=4;
+      roupas.push({w: widith, color: this.colors[i % 5]})
+      widith+=4;
     }
-    this.roupas.reverse();
+    roupas.reverse();
+    this.gavetas[0] = roupas;
   }
 
   hanoi(gaveta: number){
@@ -54,6 +57,15 @@ export class AppComponent implements OnInit{
         this.gavetas[this.gavetaInicial-1].pop();
       }
     }
+  }
+
+  atualizaRoupas(qtd: number){
+    this.numeroDeRoupas = qtd;
+    this.iniciaRoupas();
+  }
+
+  getMovements(): number{
+    return 2**this.numeroDeRoupas - 1;
   }
 
   onDrop(event: any, gaveta: number) {
