@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Roupa } from './interfaces/roupa.interface';
+import { Solucao } from './interfaces/solucao.interface';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +19,11 @@ export class AppComponent implements OnInit{
   gavetas: any[] = [];
   colors = ['yellow', 'green', 'red', 'blue', 'gray']
 
-  solucao: any[] = [];
+  solucao: Solucao[] = [];
+  isSolucao: boolean = false;
+  character: string = '';
+  timer: any;
+
   //Variável que apenas indicará de qual gaveta a roupa está sendo retirada
   gavetaInicial = 0;
 
@@ -29,9 +34,16 @@ export class AppComponent implements OnInit{
     this.start();
   }
 
+  ngOnDestroy() {
+    clearTimeout(this.timer);
+  }
+
   start(){
     this.result = 'normal';
     this.draggable = true;
+    this.character = '../assets/character.png';
+    this.isSolucao = false;
+    this.solucao = [];
     
     this.iniciaRoupas();
     this.setMovements();
@@ -61,17 +73,21 @@ export class AppComponent implements OnInit{
     if(this.gavetaInicial != gaveta && this.draggable){
       if(to.length > 0){
         if(to[to.length-1].w > from[from.length-1].w){
-          this.gavetas[gaveta-1].push(from[from.length-1]);
-          this.gavetas[this.gavetaInicial-1].pop();
-          this.movimentosRestantes--;
+          this.moveRoupa(this.gavetaInicial, gaveta);
         }
       }
       else{
-        this.gavetas[gaveta-1].push(from[from.length-1]);
-        this.gavetas[this.gavetaInicial-1].pop();
-        this.movimentosRestantes--;
+        this.moveRoupa(this.gavetaInicial, gaveta);
       }
     }
+  }
+
+  moveRoupa(gavetaOrigem: number, gavetaDestino: number){
+    let from = this.gavetas[gavetaOrigem-1];
+
+    this.gavetas[gavetaDestino-1].push(from[from.length-1]);
+    this.gavetas[gavetaOrigem-1].pop();
+    this.movimentosRestantes--;
   }
 
   atualizaRoupas(qtd: number){
@@ -84,17 +100,20 @@ export class AppComponent implements OnInit{
   }
 
   getCharacter(): string{
-    if(this.gavetas[1].length == this.numeroDeRoupas || this.gavetas[2] == this.numeroDeRoupas){
-      this.result = 'happy';
-      this.draggable = false;
-      return '../assets/happy_character.png'
+    
+    if(!this.isSolucao){
+      if(this.gavetas[1].length == this.numeroDeRoupas || this.gavetas[2] == this.numeroDeRoupas){
+        this.result = 'happy';
+        this.draggable = false;
+        this.character = '../assets/happy_character.png';
+      }
+      else if(this.movimentosRestantes==0){
+        this.result = 'tired';
+        this.draggable = false;
+        this.character = '../assets/tired_character.png'
+      }
     }
-    if(this.movimentosRestantes==0){
-      this.result = 'tired';
-      this.draggable = false;
-      return '../assets/tired_character.png'
-    }
-    return '../assets/character.png';
+    return this.character;
   }
 
   onDrop(event: any, gaveta: number) {
@@ -110,12 +129,37 @@ export class AppComponent implements OnInit{
   onDragStart(gaveta: number){
     this.gavetaInicial = gaveta;
   }
+
+  resolucao(){
+    this.solucaoHanoi(this.numeroDeRoupas, 1, 3, 2);
+    let aux = this.movimentosRestantes-1;
+
+    this.isSolucao = true;
+
+    let i=0;
+    this.timer = setInterval(()=>{
+      this.moveRoupa(this.solucao[i].origem, this.solucao[i].destino);
+      
+      if(i==aux){
+        this.result = 'happy'
+        this.draggable = false;
+        this.character = '../assets/happy_character.png';
+        clearInterval(this.timer);
+      }
+
+      i++;
+    }, 500)
+  }
+
+  stopLoop(){
+    clearInterval(this.timer)
+  }
   
-  solucaoHanoi(numeroDeRoupas: number, gavetaOrigem: number, gavetaDestino: number, gavetaAux: number, solucao: any ){
+  solucaoHanoi(numeroDeRoupas: number, gavetaOrigem: number, gavetaDestino: number, gavetaAux: number){
     if(numeroDeRoupas > 0){
-        this.solucaoHanoi(numeroDeRoupas - 1, gavetaOrigem, gavetaAux, gavetaDestino, solucao);
+        this.solucaoHanoi(numeroDeRoupas - 1, gavetaOrigem, gavetaAux, gavetaDestino);
         this.solucao.push({origem: gavetaOrigem, destino: gavetaDestino});
-        this.solucaoHanoi(numeroDeRoupas - 1, gavetaAux, gavetaDestino, gavetaOrigem, solucao);
+        this.solucaoHanoi(numeroDeRoupas - 1, gavetaAux, gavetaDestino, gavetaOrigem);
     }
-}
+  }
 }
