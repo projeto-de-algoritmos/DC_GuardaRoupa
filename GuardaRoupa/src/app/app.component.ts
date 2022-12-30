@@ -18,6 +18,7 @@ export class AppComponent implements OnInit{
   gavetas: any[] = [];
   colors = ['yellow', 'green', 'red', 'blue', 'gray']
 
+  solucao: any[] = [];
   //Variável que apenas indicará de qual gaveta a roupa está sendo retirada
   gavetaInicial = 0;
 
@@ -110,4 +111,11 @@ export class AppComponent implements OnInit{
     this.gavetaInicial = gaveta;
   }
   
+  solucaoHanoi(numeroDeRoupas: number, gavetaOrigem: number, gavetaDestino: number, gavetaAux: number, solucao: any ){
+    if(numeroDeRoupas > 0){
+        this.solucaoHanoi(numeroDeRoupas - 1, gavetaOrigem, gavetaAux, gavetaDestino, solucao);
+        this.solucao.push({origem: gavetaOrigem, destino: gavetaDestino});
+        this.solucaoHanoi(numeroDeRoupas - 1, gavetaAux, gavetaDestino, gavetaOrigem, solucao);
+    }
+}
 }
