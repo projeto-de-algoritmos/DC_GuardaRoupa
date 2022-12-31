@@ -102,10 +102,12 @@ export class AppComponent implements OnInit{
   getCharacter(): string{
     
     if(!this.isSolucao){
-      if(this.gavetas[1].length == this.numeroDeRoupas || this.gavetas[2] == this.numeroDeRoupas){
+      if(this.gavetas[1].length == this.numeroDeRoupas || this.gavetas[2].length == this.numeroDeRoupas){
         this.result = 'happy';
         this.draggable = false;
         this.character = '../assets/happy_character.png';
+        console.log("entrou aqui");
+        
       }
       else if(this.movimentosRestantes==0){
         this.result = 'tired';
@@ -113,6 +115,7 @@ export class AppComponent implements OnInit{
         this.character = '../assets/tired_character.png'
       }
     }
+    
     return this.character;
   }
 
