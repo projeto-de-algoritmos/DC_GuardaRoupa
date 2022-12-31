@@ -106,8 +106,6 @@ export class AppComponent implements OnInit{
         this.result = 'happy';
         this.draggable = false;
         this.character = '../assets/happy_character.png';
-        console.log("entrou aqui");
-        
       }
       else if(this.movimentosRestantes==0){
         this.result = 'tired';
