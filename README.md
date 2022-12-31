@@ -23,7 +23,7 @@ O objetivo deste projeto é utilizar um algoritmo de dividir e conquistar para r
 
 Para testar o projeto, basta entrar neste link: https://projeto-de-algoritmos.github.io/DC_GuardaRoupa/
 
-Você pode escolher quantas roupas haviam na primeira gaveta e tentar resolver o problema por própria (realizando a quantidade de movimentos que Dona Maria consegue fazer), ou clicar em "Mostrar Resolução" para ver como o algoritmo de dividir e conquistar irá resolvê-lo.
+Você pode escolher quantas roupas haviam na primeira gaveta e tentar resolver o problema por conta própria (realizando a quantidade de movimentos que Dona Maria consegue fazer), ou clicar em "Mostrar Resolução" para ver como o algoritmo de dividir e conquistar irá resolvê-lo.
 
 
 
